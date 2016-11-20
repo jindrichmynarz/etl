@@ -13,9 +13,12 @@ import org.openrdf.repository.Repository;
 import org.openrdf.repository.sail.SailRepository;
 import org.openrdf.repository.util.Repositories;
 import org.openrdf.sail.memory.MemoryStore;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -25,6 +28,9 @@ import java.util.List;
  * Use the same vocabulary as SPARQL construct.
  */
 public final class SparqlConstructChunked implements Component.Sequential {
+
+    private static final Logger LOG =
+            LoggerFactory.getLogger(SparqlConstructChunked.class);
 
     @Component.InputPort(id = "InputRdf")
     public ChunkedStatements inputRdf;
@@ -52,17 +58,30 @@ public final class SparqlConstructChunked implements Component.Sequential {
             throw exceptionFactory.failure("Missing property: {}",
                     SparqlConstructVocabulary.HAS_QUERY);
         }
+
+        Date time;
+        long loadingTime = 0;
+        long repositoryTime = 0;
+        long queryTime = 0;
+        long writeTime = 0;
+
         // We always perform inserts.
         progressReport.start(inputRdf.size());
         List<Statement> outputBuffer = new ArrayList<>(10000);
-        for (ChunkedStatements.Chunk chunk: inputRdf) {
+        for (ChunkedStatements.Chunk chunk : inputRdf) {
             // Prepare repository and load data.
             final Repository repository = new SailRepository(new MemoryStore());
             repository.initialize();
+
+            time = new Date();
             final Collection<Statement> statements = chunk.toStatements();
+            loadingTime += (new Date()).getTime() - time.getTime();
+            time = new Date();
             Repositories.consume(repository, (connection) -> {
                 connection.add(statements);
             });
+            repositoryTime += (new Date()).getTime() - time.getTime();
+            time = new Date();
             // Execute query and store result.
             Repositories.consume(repository, (connection) -> {
                 final GraphQueryResult result = connection.prepareGraphQuery(
@@ -71,13 +90,19 @@ public final class SparqlConstructChunked implements Component.Sequential {
                     outputBuffer.add(result.next());
                 }
             });
+            queryTime += (new Date()).getTime() - time.getTime();
+            time = new Date();
             outputRdf.submit(outputBuffer);
+            writeTime += (new Date()).getTime() - time.getTime();
             // Cleanup.
             outputBuffer.clear();
             repository.shutDown();
             progressReport.entryProcessed();
         }
         progressReport.done();
+        LOG.info("LOADING,REPOSITORY,QUERY,WRITE: {} {} {} {}",
+                loadingTime / 1000 , repositoryTime / 1000,
+                queryTime / 1000, writeTime / 1000);
     }
 
 }

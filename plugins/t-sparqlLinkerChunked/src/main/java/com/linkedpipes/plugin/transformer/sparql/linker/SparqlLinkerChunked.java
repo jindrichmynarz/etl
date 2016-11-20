@@ -20,6 +20,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -80,6 +81,13 @@ public final class SparqlLinkerChunked implements Component.Sequential {
             }, referenceRdf.getGraph());
         });
         //
+
+        Date time;
+        long loadingTime = 0;
+        long repositoryTime = 0;
+        long queryTime = 0;
+        long writeTime = 0;
+
         for (ChunkedStatements.Chunk data : dataRdf) {
             LOG.info("processing ..");
             // Prepare repository and load data.
@@ -87,11 +95,16 @@ public final class SparqlLinkerChunked implements Component.Sequential {
                     new SailRepository(new MemoryStore());
             repository.initialize();
             LOG.info("\tloading ..");
+            time = new Date();
             final Collection<Statement> statements = data.toStatements();
+            loadingTime += (new Date()).getTime() - time.getTime();
+            time = new Date();
             Repositories.consume(repository, (connection) -> {
                 connection.add(statements);
                 connection.add(reference);
             });
+            repositoryTime += (new Date()).getTime() - time.getTime();
+            time = new Date();
             LOG.info("\tquerying ..");
             // Execute query and store result.
             Repositories.consume(repository, (connection) -> {
@@ -102,8 +115,12 @@ public final class SparqlLinkerChunked implements Component.Sequential {
                     outputBuffer.add(result.next());
                 }
             });
+            queryTime += (new Date()).getTime() - time.getTime();
+            time = new Date();
             outputRdf.submit(outputBuffer);
             LOG.info("\tcleanup ..");
+            writeTime += (new Date()).getTime() - time.getTime();
+            time = new Date();
             // Cleanup.
             outputBuffer.clear();
             repository.shutDown();
@@ -111,6 +128,9 @@ public final class SparqlLinkerChunked implements Component.Sequential {
             LOG.info("\tdone ..");
         }
         progressReport.done();
+        LOG.info("LOADING,REPOSITORY,QUERY,WRITE: {} {} {} {}",
+                loadingTime / 1000 , repositoryTime / 1000,
+                queryTime / 1000, writeTime / 1000);
     }
 
 }
