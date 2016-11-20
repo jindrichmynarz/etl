@@ -48,6 +48,7 @@ class ChunkedDataUnit implements ChunkedStatements, WritableChunkedStatements,
                 throw ExceptionFactory.failure("Can't load chunk.", ex);
             }
             LOG.info("LOADING CHUNK DONE");
+            LOG.info("LOAD TRIPLES IN CHUNK: {}", statements.size());
             return statements;
         }
     }
@@ -94,6 +95,7 @@ class ChunkedDataUnit implements ChunkedStatements, WritableChunkedStatements,
             throw ExceptionFactory.failure("Can't save chunk.", ex);
         }
         LOG.info("WRITING CHUNK DONE");
+        LOG.info("WRITE TRIPLES IN CHUNK: {}", statements.size());
     }
 
     @Override

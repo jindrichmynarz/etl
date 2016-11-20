@@ -63,6 +63,7 @@ public final class FilesToRdfChunked implements Component.Sequential {
                 defaultFormat = null;
             }
         }
+        LOG.info("CHUNK SIZE: {}", configuration.getFilesPerChunk());
         //
         progressReport.start(inputFiles.size());
         for (FilesDataUnit.Entry entry : inputFiles) {

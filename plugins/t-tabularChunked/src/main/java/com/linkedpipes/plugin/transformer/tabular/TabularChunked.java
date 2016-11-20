@@ -39,7 +39,7 @@ public class TabularChunked implements Component.Sequential {
     public void execute() throws LpException {
         final RdfOutput output = new RdfOutput(outputRdfDataUnit,
                 configuration.getChunkSize());
-        LOG.info("Chunk size: {}", configuration.getChunkSize());
+        LOG.info("CHUNK SIZE: {}", configuration.getChunkSize());
         final Parser parser = new Parser(configuration, exceptionFactory);
         final Mapper mapper = new Mapper(output, configuration,
                 ColumnFactory.createColumnList(configuration, exceptionFactory),
