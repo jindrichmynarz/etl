@@ -31,7 +31,7 @@ class ChunkedDataUnit implements ChunkedStatements, WritableChunkedStatements,
 
         @Override
         public Collection<Statement> toStatements() throws LpException {
-            LOG.info("Loading: {} ... ", file);
+            LOG.info("LOADING CHUNK");
             final List<Statement> statements = new LinkedList<>();
             try (InputStream stream = new FileInputStream(file);
                  Reader reader = new InputStreamReader(stream, "UTF-8")) {
@@ -47,7 +47,7 @@ class ChunkedDataUnit implements ChunkedStatements, WritableChunkedStatements,
             } catch (IOException ex) {
                 throw ExceptionFactory.failure("Can't load chunk.", ex);
             }
-            LOG.info("Loading: {} ... done", file);
+            LOG.info("LOADING CHUNK DONE");
             return statements;
         }
     }
@@ -86,12 +86,14 @@ class ChunkedDataUnit implements ChunkedStatements, WritableChunkedStatements,
     public void submit(Collection<Statement> statements) throws LpException {
         final File outputFile =
                 new File(writeDirectory, ++fileCounter + ".ttl");
+        LOG.info("WRITING CHUNK");
         try (OutputStream stream = new FileOutputStream(outputFile);
              Writer writer = new OutputStreamWriter(stream, "UTF-8")) {
             Rio.write(statements, writer, RDFFormat.TURTLE);
         } catch (IOException ex) {
             throw ExceptionFactory.failure("Can't save chunk.", ex);
         }
+        LOG.info("WRITING CHUNK DONE");
     }
 
     @Override
