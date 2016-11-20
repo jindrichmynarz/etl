@@ -59,11 +59,11 @@ public final class SparqlUpdateChunked implements Component.Sequential {
 
 
         Date time;
-        long loadingTime = 0;
-        long repositoryTime = 0;
-        long queryTime = 0;
-        long getTime = 0;
-        long writeTime = 0;
+        long loadingTimeGlobal = 0;
+        long repositoryTimeGlobal = 0;
+        long queryTimeGlobal = 0;
+        long writeTimeGlobal = 0;
+        long getTimeGlobal = 0;
 
         // We always perform inserts.
         progressReport.start(inputRdf.size());
@@ -74,19 +74,19 @@ public final class SparqlUpdateChunked implements Component.Sequential {
             repository.initialize();
             time = new Date();
             final Collection<Statement> statements = chunk.toStatements();
-            loadingTime += (new Date()).getTime() - time.getTime();
+            long loadingTime = (new Date()).getTime() - time.getTime();
             time = new Date();
             Repositories.consume(repository, (connection) -> {
                 connection.add(statements);
             });
-            repositoryTime += (new Date()).getTime() - time.getTime();
+            long repositoryTime = (new Date()).getTime() - time.getTime();
             time = new Date();
             // Execute query.
             Repositories.consume(repository, (connection) -> {
                 connection.prepareUpdate(
                         configuration.getQuery()).execute();
             });
-            queryTime += (new Date()).getTime() - time.getTime();
+            long queryTime = (new Date()).getTime() - time.getTime();
             time = new Date();
             // Store data.
             Repositories.consume(repository, (connection) -> {
@@ -98,21 +98,30 @@ public final class SparqlUpdateChunked implements Component.Sequential {
                     }
                 });
             });
-            getTime += (new Date()).getTime() - time.getTime();
+            long getTime = (new Date()).getTime() - time.getTime();
             time = new Date();
             outputRdf.submit(outputBuffer);
-            writeTime += (new Date()).getTime() - time.getTime();
-            time = new Date();
+            long writeTime = (new Date()).getTime() - time.getTime();
+
+            LOG.info("CHUNK:{},{},{},{},{},{}", statements.size(),
+                    outputBuffer.size(), loadingTime,
+                    repositoryTime, queryTime, writeTime);
+
+            loadingTimeGlobal += loadingTime;
+            repositoryTimeGlobal += repositoryTime;
+            queryTimeGlobal += queryTime;
+            writeTimeGlobal += writeTime;
+            getTimeGlobal += getTime;
+
             // Cleanup.
             outputBuffer.clear();
             repository.shutDown();
             progressReport.entryProcessed();
         }
         progressReport.done();
-        LOG.info("LOADING,REPOSITORY,QUERY,WRITE: {} {} {} {}",
-                loadingTime / 1000, repositoryTime / 1000,
-                queryTime / 1000, writeTime / 1000);
-        LOG.info("GET: {}", getTime / 1000);
+        LOG.info("GLOBAL:{},{},{},{},{}", loadingTimeGlobal,
+                repositoryTimeGlobal, queryTimeGlobal, writeTimeGlobal,
+                getTimeGlobal);
     }
 
 }

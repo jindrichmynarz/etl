@@ -19,6 +19,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,6 +48,10 @@ public final class FilesToRdfChunked implements Component.Sequential {
      */
     private List<Statement> buffer = new ArrayList<>(10000);
 
+    long readTimeGlobal = 0;
+
+    long writeTimeGlobal = 0;
+
     @Override
     public void execute() throws LpException {
         final RDFFormat defaultFormat;
@@ -63,7 +68,7 @@ public final class FilesToRdfChunked implements Component.Sequential {
                 defaultFormat = null;
             }
         }
-        LOG.info("CHUNK SIZE: {}", configuration.getFilesPerChunk());
+        LOG.info("CHUNK_SIZE:{}", configuration.getFilesPerChunk());
         //
         progressReport.start(inputFiles.size());
         for (FilesDataUnit.Entry entry : inputFiles) {
@@ -83,10 +88,12 @@ public final class FilesToRdfChunked implements Component.Sequential {
             progressReport.entryProcessed();
         }
         progressReport.done();
+        LOG.info("GLOBAL:{},{}", readTimeGlobal, writeTimeGlobal);
     }
 
     private void loadFile(File file, RDFFormat format) throws LpException {
         buffer.clear();
+        Date time = new Date();
         try (InputStream stream = new FileInputStream(file)) {
             final RDFParser parser = Rio.createParser(format);
             parser.setRDFHandler(new AbstractRDFHandler() {
@@ -99,7 +106,13 @@ public final class FilesToRdfChunked implements Component.Sequential {
         } catch (IOException ex) {
             exceptionFactory.failure("Can't load file: {}", file, ex);
         }
+        long readTime = (new Date()).getTime() - (new Date()).getTime();
+        time = new Date();
         outputRdf.submit(buffer);
+        long writeTime = (new Date()).getTime() - (new Date()).getTime();
+        LOG.info("CHUNK:{},{},{}", buffer.size(), readTime, writeTime);
+        readTimeGlobal += readTime;
+        writeTimeGlobal += writeTime;
     }
 
 }

@@ -31,7 +31,7 @@ class ChunkedDataUnit implements ChunkedStatements, WritableChunkedStatements,
 
         @Override
         public Collection<Statement> toStatements() throws LpException {
-            LOG.info("LOADING CHUNK");
+            Date time = new Date();
             final List<Statement> statements = new LinkedList<>();
             try (InputStream stream = new FileInputStream(file);
                  Reader reader = new InputStreamReader(stream, "UTF-8")) {
@@ -47,8 +47,9 @@ class ChunkedDataUnit implements ChunkedStatements, WritableChunkedStatements,
             } catch (IOException ex) {
                 throw ExceptionFactory.failure("Can't load chunk.", ex);
             }
-            LOG.info("LOADING CHUNK DONE");
-            LOG.info("LOAD TRIPLES IN CHUNK: {}", statements.size());
+            LOG.info("READ_CHUNK:{},{}",
+                    (new Date()).getTime() - time.getTime(),
+                    statements.size());
             return statements;
         }
     }
@@ -87,15 +88,16 @@ class ChunkedDataUnit implements ChunkedStatements, WritableChunkedStatements,
     public void submit(Collection<Statement> statements) throws LpException {
         final File outputFile =
                 new File(writeDirectory, ++fileCounter + ".ttl");
-        LOG.info("WRITING CHUNK");
+        Date time = new Date();
         try (OutputStream stream = new FileOutputStream(outputFile);
              Writer writer = new OutputStreamWriter(stream, "UTF-8")) {
             Rio.write(statements, writer, RDFFormat.TURTLE);
         } catch (IOException ex) {
             throw ExceptionFactory.failure("Can't save chunk.", ex);
         }
-        LOG.info("WRITING CHUNK DONE");
-        LOG.info("WRITE TRIPLES IN CHUNK: {}", statements.size());
+        LOG.info("WRITE_CHUNK:{},{}",
+                (new Date()).getTime() - time.getTime(),
+                statements.size());
     }
 
     @Override

@@ -83,10 +83,10 @@ public final class SparqlLinkerChunked implements Component.Sequential {
         //
 
         Date time;
-        long loadingTime = 0;
-        long repositoryTime = 0;
-        long queryTime = 0;
-        long writeTime = 0;
+        long loadingTimeGlobal = 0;
+        long repositoryTimeGlobal = 0;
+        long queryTimeGlobal = 0;
+        long writeTimeGlobal = 0;
 
         for (ChunkedStatements.Chunk data : dataRdf) {
             LOG.info("processing ..");
@@ -97,13 +97,13 @@ public final class SparqlLinkerChunked implements Component.Sequential {
             LOG.info("\tloading ..");
             time = new Date();
             final Collection<Statement> statements = data.toStatements();
-            loadingTime += (new Date()).getTime() - time.getTime();
+            long loadingTime = (new Date()).getTime() - time.getTime();
             time = new Date();
             Repositories.consume(repository, (connection) -> {
                 connection.add(statements);
                 connection.add(reference);
             });
-            repositoryTime += (new Date()).getTime() - time.getTime();
+            long repositoryTime = (new Date()).getTime() - time.getTime();
             time = new Date();
             LOG.info("\tquerying ..");
             // Execute query and store result.
@@ -115,12 +115,21 @@ public final class SparqlLinkerChunked implements Component.Sequential {
                     outputBuffer.add(result.next());
                 }
             });
-            queryTime += (new Date()).getTime() - time.getTime();
+            long queryTime = (new Date()).getTime() - time.getTime();
             time = new Date();
             outputRdf.submit(outputBuffer);
             LOG.info("\tcleanup ..");
-            writeTime += (new Date()).getTime() - time.getTime();
-            time = new Date();
+            long writeTime = (new Date()).getTime() - time.getTime();
+
+            LOG.info("CHUNK:{},{},{},{},{},{}", statements.size(),
+                    outputBuffer.size(), loadingTime,
+                    repositoryTime, queryTime, writeTime);
+
+            loadingTimeGlobal += loadingTime;
+            repositoryTimeGlobal += repositoryTime;
+            queryTimeGlobal += queryTime;
+            writeTimeGlobal += writeTime;
+
             // Cleanup.
             outputBuffer.clear();
             repository.shutDown();
@@ -128,9 +137,8 @@ public final class SparqlLinkerChunked implements Component.Sequential {
             LOG.info("\tdone ..");
         }
         progressReport.done();
-        LOG.info("LOADING,REPOSITORY,QUERY,WRITE: {} {} {} {}",
-                loadingTime / 1000 , repositoryTime / 1000,
-                queryTime / 1000, writeTime / 1000);
+        LOG.info("GLOBAL:{},{},{},{}", loadingTimeGlobal,
+                repositoryTimeGlobal, queryTimeGlobal, writeTimeGlobal);
     }
 
 }
