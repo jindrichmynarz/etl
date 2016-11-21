@@ -7,6 +7,8 @@ import com.linkedpipes.etl.dataunit.sesame.api.rdf.WritableChunkedStatements;
 import com.linkedpipes.etl.executor.api.v1.dataunit.ManageableDataUnit;
 import com.linkedpipes.etl.executor.api.v1.exception.LpException;
 import org.openrdf.model.Statement;
+import org.openrdf.model.ValueFactory;
+import org.openrdf.model.impl.SimpleValueFactory;
 import org.openrdf.rio.RDFFormat;
 import org.openrdf.rio.RDFHandlerException;
 import org.openrdf.rio.RDFParser;
@@ -171,6 +173,38 @@ class ChunkedDataUnit implements ChunkedStatements, WritableChunkedStatements,
             }
         }
         initialized = true;
+        // Read - write some data to initialize.
+        LOG.info("INITIALIZATION WRITE");
+        final File testInitFile =
+                new File(writeDirectory, "init/" +  ++fileCounter + ".ttl");
+        testInitFile.getParentFile().mkdirs();
+        List<Statement> statements = new LinkedList<>();
+        final ValueFactory vf = SimpleValueFactory.getInstance();
+        statements.add(vf.createStatement(vf.createBNode(),
+                vf.createIRI("http://localhost"), vf.createLiteral("init")));
+        try (OutputStream stream = new FileOutputStream(testInitFile);
+             Writer writer = new OutputStreamWriter(stream, "UTF-8")) {
+            Rio.write(statements, writer, RDFFormat.TURTLE);
+        } catch (IOException ex) {
+            throw ExceptionFactory.failure("Can't save chunk.", ex);
+        }
+        statements.clear();
+        LOG.info("INITIALIZATION READ");
+        try (InputStream stream = new FileInputStream(testInitFile);
+             Reader reader = new InputStreamReader(stream, "UTF-8")) {
+            RDFParser parser = Rio.createParser(RDFFormat.TURTLE);
+            parser.setRDFHandler(new AbstractRDFHandler() {
+                @Override
+                public void handleStatement(Statement st)
+                        throws RDFHandlerException {
+                    statements.add(st);
+                }
+            });
+            parser.parse(reader, "http://localhost/base/");
+        } catch (IOException ex) {
+            throw ExceptionFactory.failure("Can't load chunk.", ex);
+        }
+        LOG.info("INITIALIZATION DONE");
     }
 
     @Override
@@ -180,6 +214,7 @@ class ChunkedDataUnit implements ChunkedStatements, WritableChunkedStatements,
         final List<String> relativeDirectories = new ArrayList<>(
                 readDirectories.size());
         for (File file : readDirectories) {
+            LOG.info("relativize: {} : {}", directory, file);
             relativeDirectories.add(directory.toPath().relativize(
                     file.toPath()).toString());
         }
