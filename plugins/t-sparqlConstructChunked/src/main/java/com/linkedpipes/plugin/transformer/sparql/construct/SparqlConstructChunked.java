@@ -114,7 +114,7 @@ public final class SparqlConstructChunked implements Component.Sequential {
 
         }
         progressReport.done();
-        LOG.info("GLOBAL:{},{}{},{},{},{}", inGlobal, outGlobal,
+        LOG.info("GLOBAL:{},{},{},{},{},{}", inGlobal, outGlobal,
                 loadingTimeGlobal, repositoryTimeGlobal,
                 queryTimeGlobal, writeTimeGlobal);
     }

@@ -123,7 +123,7 @@ public final class SparqlUpdateChunked implements Component.Sequential {
             progressReport.entryProcessed();
         }
         progressReport.done();
-        LOG.info("GLOBAL:{},{}{},{},{},{}", inGlobal, outGlobal,
+        LOG.info("GLOBAL:{},{},{},{},{},{}", inGlobal, outGlobal,
                 loadingTimeGlobal, repositoryTimeGlobal,
                 queryTimeGlobal, writeTimeGlobal);
     }

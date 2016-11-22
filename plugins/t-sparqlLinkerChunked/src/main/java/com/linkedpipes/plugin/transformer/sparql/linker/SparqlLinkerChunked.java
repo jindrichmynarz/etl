@@ -141,7 +141,7 @@ public final class SparqlLinkerChunked implements Component.Sequential {
             LOG.info("\tdone ..");
         }
         progressReport.done();
-        LOG.info("GLOBAL:{},{}{},{},{},{}", inGlobal, outGlobal,
+        LOG.info("GLOBAL:{},{},{},{},{},{}", inGlobal, outGlobal,
                 loadingTimeGlobal, repositoryTimeGlobal,
                 queryTimeGlobal, writeTimeGlobal);
     }
