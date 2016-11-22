@@ -50,6 +50,7 @@ public final class RdfToFileChunked implements Component.Sequential {
             throw exceptionFactory.failure("Invalid output file type: {}",
                     configuration.getFileName());
         }
+        long totalSize = 0;
         final File outputFile = outputFiles.createFile(
                 configuration.getFileName()).toFile();
         try (FileOutputStream outStream = new FileOutputStream(outputFile);
@@ -72,6 +73,7 @@ public final class RdfToFileChunked implements Component.Sequential {
             progressReport.start(inputRdf.size());
             for (ChunkedStatements.Chunk chunk : inputRdf) {
                 for (Statement statement : chunk.toStatements()) {
+                    ++totalSize;
                     writer.handleStatement(statement);
                 }
                 progressReport.entryProcessed();
@@ -81,6 +83,7 @@ public final class RdfToFileChunked implements Component.Sequential {
         } catch (IOException ex) {
             throw exceptionFactory.failure("Can't write data.", ex);
         }
+        LOG.info("TOTAL SIZE: {}", totalSize);
     }
 
     /**

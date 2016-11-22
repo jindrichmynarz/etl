@@ -83,6 +83,8 @@ public final class SparqlLinkerChunked implements Component.Sequential {
         //
 
         Date time;
+        long inGlobal = 0;
+        long outGlobal = 0;
         long loadingTimeGlobal = 0;
         long repositoryTimeGlobal = 0;
         long queryTimeGlobal = 0;
@@ -125,6 +127,8 @@ public final class SparqlLinkerChunked implements Component.Sequential {
                     outputBuffer.size(), loadingTime,
                     repositoryTime, queryTime, writeTime);
 
+            inGlobal += statements.size();
+            outGlobal = outputBuffer.size();
             loadingTimeGlobal += loadingTime;
             repositoryTimeGlobal += repositoryTime;
             queryTimeGlobal += queryTime;
@@ -137,8 +141,9 @@ public final class SparqlLinkerChunked implements Component.Sequential {
             LOG.info("\tdone ..");
         }
         progressReport.done();
-        LOG.info("GLOBAL:{},{},{},{}", loadingTimeGlobal,
-                repositoryTimeGlobal, queryTimeGlobal, writeTimeGlobal);
+        LOG.info("GLOBAL:{},{}{},{},{},{}", inGlobal, outGlobal,
+                loadingTimeGlobal, repositoryTimeGlobal,
+                queryTimeGlobal, writeTimeGlobal);
     }
 
 }
