@@ -40,7 +40,7 @@ public class ChunkIterator implements Iterator<ChunkedStatements.Chunk> {
             nextChunk = dataUnit.createChunk(fileIterator.next());
         } else if (directoryIterator.hasNext()) {
             fileIterator = FileUtils.iterateFiles(
-                    directoryIterator.next(), null, true);
+                    directoryIterator.next(), null, false);
             prepareNext();
         } else {
             nextChunk = null;
