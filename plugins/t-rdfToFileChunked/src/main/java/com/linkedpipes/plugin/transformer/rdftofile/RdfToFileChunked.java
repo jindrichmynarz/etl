@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.nio.charset.Charset;
+import java.util.Date;
 import java.util.Optional;
 
 /**
@@ -50,7 +51,11 @@ public final class RdfToFileChunked implements Component.Sequential {
             throw exceptionFactory.failure("Invalid output file type: {}",
                     configuration.getFileName());
         }
+
         long totalSize = 0;
+        long timeGlobal = 0;
+        Date time;
+
         final File outputFile = outputFiles.createFile(
                 configuration.getFileName()).toFile();
         try (FileOutputStream outStream = new FileOutputStream(outputFile);
@@ -71,6 +76,7 @@ public final class RdfToFileChunked implements Component.Sequential {
             }
             //
             progressReport.start(inputRdf.size());
+            time = new Date();
             for (ChunkedStatements.Chunk chunk : inputRdf) {
                 for (Statement statement : chunk.toStatements()) {
                     ++totalSize;
@@ -78,12 +84,14 @@ public final class RdfToFileChunked implements Component.Sequential {
                 }
                 progressReport.entryProcessed();
             }
+            timeGlobal = (new Date()).getTime() - time.getTime();
             progressReport.done();
             writer.endRDF();
         } catch (IOException ex) {
             throw exceptionFactory.failure("Can't write data.", ex);
         }
-        LOG.info("TOTAL SIZE: {}", totalSize);
+        LOG.info("TOTAL_SIZE: {}", totalSize);
+        LOG.info("GLOBAL:{}", timeGlobal);
     }
 
     /**

@@ -106,10 +106,10 @@ public final class FilesToRdfChunked implements Component.Sequential {
         } catch (IOException ex) {
             exceptionFactory.failure("Can't load file: {}", file, ex);
         }
-        long readTime = (new Date()).getTime() - (new Date()).getTime();
+        long readTime = (new Date()).getTime() - time.getTime();
         time = new Date();
         outputRdf.submit(buffer);
-        long writeTime = (new Date()).getTime() - (new Date()).getTime();
+        long writeTime = (new Date()).getTime() - time.getTime();
         LOG.info("CHUNK:{},{},{}", buffer.size(), readTime, writeTime);
         readTimeGlobal += readTime;
         writeTimeGlobal += writeTime;
