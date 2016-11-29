@@ -71,6 +71,7 @@ public final class FilesToRdfChunked implements Component.Sequential {
         LOG.info("CHUNK_SIZE:{}", configuration.getFilesPerChunk());
         //
         progressReport.start(inputFiles.size());
+        int counter = 0;
         for (FilesDataUnit.Entry entry : inputFiles) {
             LOG.debug("Loading: {}", entry.getFileName());
             if (defaultFormat == null) {
@@ -85,15 +86,27 @@ public final class FilesToRdfChunked implements Component.Sequential {
             } else {
                 loadFile(entry.toFile(), defaultFormat);
             }
+            counter++;
+            if (counter >= configuration.getFilesPerChunk()) {
+                outputRdf.submit(buffer);
+                buffer.clear();
+                counter = 0;
+            }
             progressReport.entryProcessed();
         }
+        //
+        if (!buffer.isEmpty()) {
+            outputRdf.submit(buffer);
+            buffer.clear();
+        }
+        //
         progressReport.done();
         LOG.info("GLOBAL:{},{}", readTimeGlobal, writeTimeGlobal);
     }
 
     private void loadFile(File file, RDFFormat format) throws LpException {
-        buffer.clear();
         Date time = new Date();
+        long bufferBefore = buffer.size();
         try (InputStream stream = new FileInputStream(file)) {
             final RDFParser parser = Rio.createParser(format);
             parser.setRDFHandler(new AbstractRDFHandler() {
@@ -108,9 +121,8 @@ public final class FilesToRdfChunked implements Component.Sequential {
         }
         long readTime = (new Date()).getTime() - time.getTime();
         time = new Date();
-        outputRdf.submit(buffer);
         long writeTime = (new Date()).getTime() - time.getTime();
-        LOG.info("CHUNK:{},{},{}", buffer.size(), readTime, writeTime);
+        LOG.info("FILE:{},{},{}", buffer.size() - bufferBefore, readTime, writeTime);
         readTimeGlobal += readTime;
         writeTimeGlobal += writeTime;
     }
