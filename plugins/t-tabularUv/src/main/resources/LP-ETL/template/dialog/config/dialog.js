@@ -12,6 +12,10 @@ define([], function () {
             "$type": "str",
             "$label": "Key column"
         },
+        "keyColumn": {
+            "$type": "str",
+            "$label": "Key column"
+        },
         "column": {
             "$label": "Mapping",
             "$array": true,
@@ -164,7 +168,7 @@ define([], function () {
         }
 
         $scope.onAddColumn = function () {
-            $scope.dialog.columns.value.push({
+            $scope.dialog.column.value.push({
                 'name': {'value': ''},
                 'type': {'value': ''},
                 'lang': {'value': ''},
