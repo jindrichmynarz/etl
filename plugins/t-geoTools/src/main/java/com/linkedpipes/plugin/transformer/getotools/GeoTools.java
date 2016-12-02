@@ -20,10 +20,7 @@ import org.openrdf.model.vocabulary.RDF;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Transform geo coordinates.
@@ -65,6 +62,8 @@ public final class GeoTools implements Component.Sequential {
     private ValueFactory valueFactory = SimpleValueFactory.getInstance();
 
     private boolean printTypeWarning = false;
+
+    private long timeProjection = 0;
 
     @Override
     public void execute() throws LpException {
@@ -136,6 +135,7 @@ public final class GeoTools implements Component.Sequential {
             progressReport.entryProcessed();
         }
         progressReport.done();
+        LOG.info("GEO_GLOBAL: {]", timeProjection);
     }
 
     protected void process(Resource subject, Point point,
@@ -154,6 +154,7 @@ public final class GeoTools implements Component.Sequential {
      */
     protected void process(Resource subject, Value coord, String coordType,
             List<Statement> outputBuffer) throws LpException {
+        Date time = new Date();
         if (coordType == null || coordType.isEmpty()) {
             coordType = configuration.getDefaultCoordType();
         }
@@ -176,6 +177,7 @@ public final class GeoTools implements Component.Sequential {
             transX = dstPosition.x;
             transY = dstPosition.y;
         } catch (Exception ex) {
+            timeProjection += (new Date()).getTime() - time.getTime();
             if (configuration.isFailOnError()) {
                 throw exceptionFactory.failure("Can't convert coordinate: {}",
                         subject.stringValue(), ex);
@@ -186,6 +188,7 @@ public final class GeoTools implements Component.Sequential {
                 return;
             }
         }
+        timeProjection += (new Date()).getTime() - time.getTime();
         // Create output.
         final Resource entity = valueFactory.createIRI(
                 subject.stringValue() + "/wgs84");
@@ -206,7 +209,6 @@ public final class GeoTools implements Component.Sequential {
                 valueFactory.createIRI("http://schema.org/latitude"),
                 valueFactory.createLiteral(doubleToStr(transX),
                         "http://www.w3.org/2001/XMLSchema#double")));
-
     }
 
     private static String doubleToStr(double value) {
