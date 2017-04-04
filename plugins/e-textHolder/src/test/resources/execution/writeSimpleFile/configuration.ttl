@@ -1,0 +1,5 @@
+@prefix conf : <http://plugins.linkedpipes.com/ontology/e-textHolder#> .
+
+<http://localhost/resources/01> a conf:Configuration ;
+    conf:fileName "content.dat" ;
+    conf:content "File content." .
