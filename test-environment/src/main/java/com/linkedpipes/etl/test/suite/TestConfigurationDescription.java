@@ -46,7 +46,7 @@ public class TestConfigurationDescription {
         try {
             loadDescriptions();
         } catch (Exception ex) {
-            throw new InvalidDescription(
+            throw new TestFailed(
                     "Can't load configuration description.", ex);
         }
         validateClass(configurationClass);
@@ -54,7 +54,7 @@ public class TestConfigurationDescription {
     }
 
     private void loadDescriptions() throws IOException, RdfUtilsException,
-            InvalidDescription {
+            TestFailed {
         final Rdf4jSource source = Rdf4jSource.createInMemory();
         loadToRepository(getDescriptorFile(), source.getRepository());
         for (String resource : getDescriptionResources(source)) {
@@ -102,17 +102,17 @@ public class TestConfigurationDescription {
         return "SELECT ?s WHERE { ?s a <" + LP_OBJECTS.DESCRIPTION + "> }";
     }
 
-    private void validateClass(Class<?> objectClass) throws InvalidDescription {
+    private void validateClass(Class<?> objectClass) throws TestFailed {
         final String type = getType(objectClass);
         final ConfigurationDescription description = getDescriptor(type);
         validateProperties(objectClass, description);
     }
 
-    private String getType(Class<?> objectClass) throws InvalidDescription {
+    private String getType(Class<?> objectClass) throws TestFailed {
         final RdfToPojo.Type type =
                 objectClass.getAnnotation(RdfToPojo.Type.class);
         if (type == null) {
-            throw new InvalidDescription(
+            throw new TestFailed(
                     "Missing RdfToPojo.Type annotation: {}",
                     objectClass.getName());
         }
@@ -120,18 +120,18 @@ public class TestConfigurationDescription {
     }
 
     private ConfigurationDescription getDescriptor(String type)
-            throws InvalidDescription {
+            throws TestFailed {
         for (ConfigurationDescription description : descriptions) {
             if (description.getReferencedType().equals(type)) {
                 return description;
             }
         }
-        throw new InvalidDescription("Missing description for: " + type);
+        throw new TestFailed("Missing description for: " + type);
     }
 
     private void validateProperties(Class<?> objectClass,
             ConfigurationDescription description)
-            throws InvalidDescription {
+            throws TestFailed {
         for (Map.Entry<String, Class> entry :
                 getAnnotatedFields(objectClass).entrySet()) {
             final ConfigurationDescription.Member member =
@@ -171,20 +171,20 @@ public class TestConfigurationDescription {
     }
 
     private void validateDescriptorsReference() throws IOException,
-            InvalidDescription {
+            TestFailed {
         final String reference = readDescriptorReference();
         for (ConfigurationDescription description : descriptions) {
             if (description.getIri().equals(reference)) {
                 return;
             }
         }
-        throw new InvalidDescription(
+        throw new TestFailed(
                 "Missing referenced descriptor (from definition): {}",
                 reference);
     }
 
     private String readDescriptorReference()
-            throws InvalidDescription, IOException {
+            throws TestFailed, IOException {
         final Model definition = readDefinition();
         final Resource component = getComponentIri(definition);
         return getReferenceForComponent(definition, component);
@@ -203,12 +203,12 @@ public class TestConfigurationDescription {
     }
 
     private Resource getComponentIri(Model definition)
-            throws InvalidDescription {
+            throws TestFailed {
         final ValueFactory valueFactory = SimpleValueFactory.getInstance();
         final Model component = definition.filter(null, RDF.TYPE,
                 valueFactory.createIRI(LP_PIPELINE.JAS_TEMPLATE));
         if (component.size() != 1) {
-            throw new InvalidDescription(
+            throw new TestFailed(
                     "Invalid count of component descriptions: {}",
                     component.size());
         }
@@ -216,14 +216,14 @@ public class TestConfigurationDescription {
     }
 
     private String getReferenceForComponent(Model definition,
-            Resource component) throws InvalidDescription {
+            Resource component) throws TestFailed {
         final ValueFactory valueFactory = SimpleValueFactory.getInstance();
         final Model references = definition.filter(component,
                 valueFactory.createIRI(
                         LP_PIPELINE.HAS_CONFIGURATION_ENTITY_DESCRIPTION),
                 null);
         if (references.size() != 1) {
-            throw new InvalidDescription(
+            throw new TestFailed(
                     "Invalid description references from component: {}",
                     references.size());
         }

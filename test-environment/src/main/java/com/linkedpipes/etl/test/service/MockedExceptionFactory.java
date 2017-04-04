@@ -1,4 +1,4 @@
-package com.linkedpipes.etl.test;
+package com.linkedpipes.etl.test.service;
 
 import com.linkedpipes.etl.executor.api.v1.LpException;
 import com.linkedpipes.etl.executor.api.v1.service.ExceptionFactory;

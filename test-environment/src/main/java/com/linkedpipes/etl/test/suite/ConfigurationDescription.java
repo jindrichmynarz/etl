@@ -60,15 +60,15 @@ class ConfigurationDescription implements RdfLoader.Loadable<String> {
             return null;
         }
 
-        public void validate() throws InvalidDescription {
+        public void validate() throws TestFailed {
             if (!types.contains(LP_OBJECTS.MEMBER)) {
-                throw new InvalidDescription("Missing type: {}", iri);
+                throw new TestFailed("Missing type: {}", iri);
             }
             if (property == null) {
-                throw new InvalidDescription("Missing property: {}", iri);
+                throw new TestFailed("Missing property: {}", iri);
             }
             if (control == null) {
-                throw new InvalidDescription("Missing control: {}", iri);
+                throw new TestFailed("Missing control: {}", iri);
             }
         }
 
@@ -120,12 +120,12 @@ class ConfigurationDescription implements RdfLoader.Loadable<String> {
         return null;
     }
 
-    public void validate() throws InvalidDescription {
+    public void validate() throws TestFailed {
         if (!types.contains(LP_OBJECTS.DESCRIPTION)) {
-            throw new InvalidDescription("Missing description type.");
+            throw new TestFailed("Missing description type.");
         }
         if (referencedType == null) {
-            throw new InvalidDescription(
+            throw new TestFailed(
                     "Missing referenced type predicate.");
         }
         for (Member member : members) {
@@ -141,13 +141,13 @@ class ConfigurationDescription implements RdfLoader.Loadable<String> {
         return referencedType;
     }
 
-    public Member getMember(String property) throws InvalidDescription {
+    public Member getMember(String property) throws TestFailed {
         for (Member member : members) {
             if (member.property.equals(property)) {
                 return member;
             }
         }
-        throw new InvalidDescription("Missing description for <{}>", property);
+        throw new TestFailed("Missing description for <{}>", property);
     }
 
 }

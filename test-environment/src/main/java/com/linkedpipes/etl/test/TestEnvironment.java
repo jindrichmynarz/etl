@@ -8,6 +8,7 @@ import com.linkedpipes.etl.executor.api.v1.service.WorkingDirectory;
 import com.linkedpipes.etl.test.dataunit.TestFilesDataUnit;
 import com.linkedpipes.etl.test.dataunit.TestGraphListDataUnit;
 import com.linkedpipes.etl.test.dataunit.TestSingleGraphDataUnit;
+import com.linkedpipes.etl.test.service.MockedServiceFactory;
 import org.eclipse.rdf4j.model.ValueFactory;
 import org.eclipse.rdf4j.model.impl.SimpleValueFactory;
 import org.eclipse.rdf4j.repository.Repository;
@@ -57,7 +58,7 @@ public class TestEnvironment implements AutoCloseable {
     public TestSingleGraphDataUnit bindSingleGraphDataUnit(String binding) {
         final String iri = getIriForBinding(binding);
         final TestSingleGraphDataUnit dataUnit = new TestSingleGraphDataUnit(
-                valueFactory.createIRI(iri), dataRepository);
+                iri, dataRepository);
         bindDataUnit(binding, dataUnit);
         return dataUnit;
     }
@@ -89,9 +90,9 @@ public class TestEnvironment implements AutoCloseable {
 
     private void bindExtension(Field field) throws IllegalAccessException {
         if (field.getType() == ProgressReport.class) {
-            field.set(component, new MockedProgressReport());
+            field.set(component, MockedServiceFactory.createProgressReport());
         } else if (field.getType() == ExceptionFactory.class) {
-            field.set(component, new MockedExceptionFactory());
+            field.set(component, MockedServiceFactory.createExceptionFactory());
         } else if (field.getType() == WorkingDirectory.class) {
             field.set(component, new WorkingDirectory(
                     componentWorkingDirectory.toURI()));

@@ -9,12 +9,13 @@ import org.eclipse.rdf4j.model.impl.SimpleValueFactory;
 import org.eclipse.rdf4j.repository.Repository;
 import org.eclipse.rdf4j.repository.RepositoryConnection;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 public class TestGraphListDataUnit
-        implements GraphListDataUnit, WritableGraphListDataUnit {
+        implements GraphListDataUnit, WritableGraphListDataUnit, Checkable {
 
     private final List<IRI> graphs = new ArrayList<>(4);
 
@@ -24,9 +25,9 @@ public class TestGraphListDataUnit
 
     private final ValueFactory valueFactory = SimpleValueFactory.getInstance();
 
-    public TestGraphListDataUnit(String baseIri,
+    public TestGraphListDataUnit(String baseGraphIri,
             Repository repository) {
-        this.baseIri = baseIri;
+        this.baseIri = baseGraphIri;
         this.repository = repository;
     }
 
@@ -67,4 +68,10 @@ public class TestGraphListDataUnit
     public Repository getRepository() {
         return repository;
     }
+
+    @Override
+    public boolean checkContent(File expectedContent) {
+        throw new UnsupportedOperationException();
+    }
+
 }
