@@ -1,0 +1,2 @@
+<http://localhost/reasources/01> <http://localhost/ontology/value> "Value" ;
+    a <http://localhost/ontology/Type> .

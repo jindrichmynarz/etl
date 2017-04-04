@@ -1,0 +1,4 @@
+@prefix conf : <http://plugins.linkedpipes.com/ontology/t-sparqlConstruct#> .
+
+<http://localhost/resources/01> a conf:Configuration ;
+    conf:query "CONSTRUCT { ?s ?p ?o ; a <http://localhost/ontology/Type> } WHERE { ?s ?p ?o }" .
