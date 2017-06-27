@@ -1,0 +1,98 @@
+---
+layout: default
+title: Components
+materialicon: extension
+order: 2
+---
+
+  <div class="container">
+	<div class="row">
+		<div class="col s12">
+			<div class="section">
+			  <h3 class="header center orange-text">Components</h3>
+			  <div class="icon-block">
+				<p class="flow-text">
+				A key building block of a <a href="../documentation/#workflow">pipeline</a> is a component. 
+                There is a library of components ready and here we go through their configuration.
+                Of course, everyone can add their own component, the best way to do that is to copy&amp;paste one of ours and change it.
+				There are five basic types of components.
+				Extractors bring data from outside to the ETL pipeline, e.g. by downloading a file from the Web.
+				Transformers perform transformation of data already in the pipeline and the result is kept in the pipeline.
+				Quallity Assessment components verify that data in the pipeline meet defined criteria.
+				Loaders take data produced by the pipeline and place it outside, e.g. upload it to a web server or database.
+                Special purpose components may do something else, e.g. run an external process.
+				</p>
+			  </div>
+			</div>
+		</div>
+    </div>
+
+	<div class="row">
+		<div class="col s12 m12 l12">
+			<div class="section">
+			  <h4 class="header center orange-text">Component types</h4>
+              <p class="flow-text">
+                The icons next to the components in the component list represent their type.
+                Currently, we have five types of components.
+            </p>
+			</div>
+		</div>
+	</div>	
+    
+    <div class="row">
+        <div class="col s12 m6 l6">
+            <p class="center"><img src="/assets/snippets/insert.png" alt="Component list" class="responsive-img"/></p>
+        </div>
+        <div class="col s12 m6 l6">
+            <ul class="collection" >
+                <li class="collection-item avatar">
+                  <img src="https://storage.googleapis.com/material-icons/external-assets/v4/icons/svg/ic_file_download_black_24px.svg" alt="Extractor" class="circle">
+                  <span class="title">Extractors</span>
+                  <p>Bring data from the outside into the pipeline</p>
+                </li>
+                <li class="collection-item avatar">
+                  <img src="https://storage.googleapis.com/material-icons/external-assets/v4/icons/svg/ic_transform_black_24px.svg" alt="Transformer" class="circle">
+                  <span class="title">Transformers</span>
+                  <p>Take data from the pipeline, change it and pass it on</p>
+                </li>
+                <li class="collection-item avatar">
+                  <img src="https://storage.googleapis.com/material-icons/external-assets/v4/icons/svg/ic_help_outline_black_24px.svg" alt="Quality" class="circle">
+                  <span class="title">Quality Assessment</span>
+                  <p>Check data passing through the pipeline and stop execution in case of problems</p>
+                </li>
+                <li class="collection-item avatar">
+                  <img src="https://storage.googleapis.com/material-icons/external-assets/v4/icons/svg/ic_file_upload_black_24px.svg" alt="Loader" class="circle">
+                  <span class="title">Loaders</span>
+                  <p>Take data from the pipeline and load it to an external place</p>
+                </li>
+                <li class="collection-item avatar">
+                  <img src="https://storage.googleapis.com/material-icons/external-assets/v4/icons/svg/ic_call_split_black_24px.svg" alt="Special" class="circle">
+                  <span class="title">Special</span>
+                  <p>They do something else, e.g. execute a remote command</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+ 
+    <div class="row">
+      <h4 class="header center orange-text">List of available components</h4>
+      
+      {% for component in site.components %}
+	  <div class="col s12 m6 l4" id="{{component.short}}">
+		  <div class="card small {{component.color}} lighten-4 hoverable">
+			<div class="card-image waves-effect waves-block waves-light">
+			  <img class="activator" src="../assets/components/{{component.short}}.png" alt="{{component.title}}">
+			</div>
+			<div class="card-content">
+			  <span class="card-title">{{component.title}}</span><a href="/components/{{component.short}}" title="{{component.title}}"><i class="material-icons right">open_in_browser</i></a>
+			  <p>{{component.description}}</p>
+			</div>
+            <div class="card-reveal {{component.color}} lighten-4">
+                <span class="card-title grey-text text-darken-4">{{component.title}}<i class="material-icons right">close</i></span>
+                {{component.excerpt}}
+            </div>
+		  </div>	
+	  </div>
+      {% endfor%}
+	  </div>
+  </div>

@@ -1,0 +1,80 @@
+---
+short: t-xslt
+type: transformer
+color: indigo
+title: XSLT transformer
+description: Transforms XML files using XSLT transformations.
+---
+
+<p class="flow-text">
+Transformer, allows the user to transform <a href="https://www.w3.org/TR/xml/">XML</a> files using <a href="https://www.w3.org/TR/xslt20/">XSLT</a>.
+</p>
+<dl class="flow-text">
+    <dt>New file extension</dt>
+    <dd>XSLT allows to create arbitrary text files from XML. Expecially for RDF files it is important that the new file has a correct extension according to its format</dd>
+    <dt>Number of threads used for transformation</dt>
+    <dd>The XSLT processor is given this number of threads to use for each transformation</dd>
+    <dt>XSLT Template</dt>
+    <dd>The XSLT template used to transform the input XML files</dd>
+</dl>
+<!--more-->
+<div class="row" id="characteristics">
+    <h3 class="orange-text center">Characteristics</h3>
+    <div class="col s12 l6">
+        <dl class="flow-text">
+            <dt>ID</dt>
+            <dd>{{ page.short }}</dd>
+            <dt>Type</dt>
+            <dd>{{ page.type }}</dd>
+            <dt>Inputs</dt>
+            <dd>Files - Input</dd>
+            <dd>RDF single graph - Parameters</dd>
+            <dt>Outputs</dt>
+            <dd>Files</dd>
+            <dt>Look in pipeline</dt>
+            <dd><img class="responsive-img" src="../assets/components/{{page.short}}.png" alt="{{page.title}}"></dd>
+            <dt>Sample pipeline</dt>
+            <dd><a href="../assets/pipelines/{{page.short}}-1.jsonld">available</a></dd>
+        </dl>
+    </div>
+    <div class="col s12 l6">
+        <p class="flow-text">
+        The {{page.title}} component takes the input XML files and runs an XSLT transformation on them.
+        It supports multiple input files and it also supports XSLT parameters serialized in RDF, different parameters can be applied to different files based on their file names.
+        </p>
+    </div>
+</div>
+<div class="row" id="runtimeconfig">
+<h3 class="orange-text center">Runtime configuration</h3>
+<p class="flow-text">Below you can see sample runtime configuration for the component. You can also import a <a href="../assets/pipelines/{{page.short}}-1.jsonld">sample pipeline</a>.
+Currently, output file names and XSLT parameters for multiple transformed files can be passed through the runtime configuration.
+</p>
+{% highlight turtle %}
+@prefix xslt: <http://etl.linkedpipes.com/ontology/components/t-xslt/> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xml:  <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+<http://localhost/resource/configuration> a xslt:Config ;
+    xslt:fileInfo <http://localhost/resource/configuration/fileinfo/1>,
+        <http://localhost/resource/configuration/fileinfo/2> .
+
+<http://localhost/resource/configuration/fileinfo/1> a xslt:FileInfo ;
+    xslt:fileName "data-1.xml" ;
+    xslt:parameter <http://localhost/resource/configuration/fileinfo/1/param/1> .
+
+<http://localhost/resource/configuration/fileinfo/1/param/1> a xslt:Parameter ;
+    xslt:parameterName "recordid" ;
+    xslt:parameterValue "365670661" .
+
+<http://localhost/resource/configuration/fileinfo/2> a xslt:FileInfo ;
+    xslt:fileName "data-2.xml" ;
+    xslt:outputName "data-2-output.ttl" ;
+    xslt:parameter <http://localhost/resource/configuration/fileinfo/2/param/1> .
+
+<http://localhost/resource/configuration/fileinfo/2/param/1> a xslt:Parameter ;
+    xslt:parameterName "recordid" ;
+    xslt:parameterValue "365670662" .
+{% endhighlight %}
+</div>

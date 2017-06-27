@@ -1,0 +1,40 @@
+---
+short: t-jsonldformat
+type: transformer
+color: indigo
+title: JSON-LD operations
+description: Performs JSON-LD operations on JSON-LD files.
+---
+
+<p class="flow-text">
+Transformer, performs JSON-LD operations on files formats using a <a href="http://json-ld.org/" title="JSON-LD processor">JSON-LD processor</a>.
+</p>
+<dl class="flow-text">
+    <dt>Operation</dt>
+    <dd>Operation to be performed on input JSON-LD files</dd>
+    <dt>JSON-LD context (where applicable)</dt>
+    <dd>For <code>Flatten</code> and <code>Compact</code> operations, a new <a href="https://www.w3.org/TR/json-ld/#the-context" title="JSON-LD context">JSON-LD context</a> can be specified</dd>
+</dl>
+<!--more-->
+<div class="row" id="characteristics">
+    <h3 class="orange-text center">Characteristics</h3>
+    <div class="col s12 l6">
+        <dl class="flow-text">
+            <dt>ID</dt>
+            <dd>{{ page.short }}</dd>
+            <dt>Type</dt>
+            <dd>{{ page.type }}</dd>
+            <dt>Inputs</dt>
+            <dd>Files</dd>
+            <dt>Outputs</dt>
+            <dd>Files</dd>
+            <dt>Look in pipeline</dt>
+            <dd><img class="responsive-img" src="../assets/components/{{page.short}}.png" alt="{{page.title}}"></dd>
+        </dl>
+    </div>
+    <div class="col s12 l6">
+        <p class="flow-text">
+        The {{page.title}} component takes the input JSON-LD files and reformats them to another JSON-LD format, such as <code>Flatten</code>, <code>Expand</code> or <code>Compact</code>.
+        </p>
+    </div>
+</div>

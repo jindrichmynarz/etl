@@ -1,0 +1,48 @@
+---
+short: t-geotools
+type: transformer
+color: indigo
+title: GeoTools
+description: Provides geographical projection transformation features.
+---
+
+<p class="flow-text">
+Transformer, provides geographical projection transformation features using the <a href="http://www.geotools.org/" title="GeoTools">GeoTools</a> library.
+</p>
+<dl class="flow-text">
+    <dt>Input resource type</dt>
+    <dd>IRI of the type of entities containing the geocoordinates, e.g. <code>http://www.opengis.net/ont/gml#Point</code></dd>
+    <dt>Predicate for coordinates</dt>
+    <dd>IRI of the predicate connecting the entity of the input resource type to the literal containing the geocoordinates, e.g. the <code>http://www.opengis.net/ont/gml#pos</code> property.
+    </dd>
+    <dt>Predicate for coordinate reference system</dt>
+    <dd>IRI of the predicate connecting the entity containing geocoordinates to a literal containing the source coordinates reference system, e.g. <code>http://www.opengis.net/ont/gml#srsName</code></dd>
+    <dt>Default coordinate reference system</dt>
+    <dd>Coordinates reference system to be used with entities, which do not specify the coordinates reference system themselves, e.g. <code>EPSG:5514</code></dd>
+    <dt>Predicate for linking to newly created points</dt>
+    <dd>The new entity containing the transformed geocoordinates will be connected to the original entity using this predicate</dd>
+    <dt>Output coordinate reference system</dt>
+    <dd>Target coordinates type, e.g. <code>EPSG:4326</code></dd>
+    <dt>Fail on error</dt>
+    <dd>Stops execution on error when enabled, continues execution when disabled.</dd>
+</dl>
+<!--more-->
+<div class="row" id="characteristics">
+    <h3 class="orange-text center">Characteristics</h3>
+    <div class="col s12 l6">
+        <dl class="flow-text">
+            <dt>ID</dt>
+            <dd>{{ page.short }}</dd>
+            <dt>Type</dt>
+            <dd>{{ page.type }}</dd>
+            <dt>Inputs</dt>
+            <dd>RDF chunked</dd>
+            <dt>Outputs</dt>
+            <dd>RDF chunked</dd>
+            <dt>Look in pipeline</dt>
+            <dd><img class="responsive-img" src="../assets/components/{{page.short}}.png" alt="{{page.title}}"></dd>
+            <dt>Sample pipeline</dt>
+            <dd><a href="../assets/pipelines/{{page.short}}-1.jsonld">available</a></dd>
+        </dl>
+    </div>
+</div>

@@ -1,0 +1,29 @@
+# Site settings
+title: LinkedPipes ETL
+email: klimek@opendata.cz
+author: 
+    name: "Jakub Klímek"
+    twitter: jakub_klimek
+    
+description: > # this means to ignore newlines until "baseurl:"
+  LinkedPipes ETL - Extract Transform and Load tool for preparation of Linked Data
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "http://etl.linkedpipes.com" # the base hostname & protocol for your site
+
+# Build settings
+excerpt_separator: <!--more-->
+collections:
+  components:
+    output: true
+  
+defaults:
+  - scope:
+      path: ""
+      type: components
+    values:
+      layout: component
+
+gems:
+  - jekyll-mentions
+  - jekyll-feed
+  - jekyll-sitemap

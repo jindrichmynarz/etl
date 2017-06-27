@@ -1,0 +1,51 @@
+---
+short: x-virtuoso
+type: other
+color: grey
+title: Virtuoso loader
+description: Instructs Virtuoso to load a file.
+---
+
+<p class="flow-text">
+Special purpose component, allows the user to instruct <a href="http://virtuoso.openlinksw.com/">OpenLink Virtuoso</a> triplestore to load a file from the remote file system. Uses <a href="http://virtuoso.openlinksw.com/dataspace/doc/dav/wiki/Main/VirtBulkRDFLoader">Virtuoso Bulk Loader</a> functionality.
+</p>
+<dl class="flow-text">
+    <dt>Host address</dt>
+    <dd>JDBC database connection string to connect to the Virtuoso iSQL port (typically <code>1111</code>)</dd>
+    <dt>Name of file to load</dt>
+    <dd>File name of the file to load</dd>
+    <dt>Target graph IRI</dt>
+    <dd>Target RDF graph for input triple files and default graph in quad files</dd>
+    <dt>Directory with files to upload</dt>
+    <dd>Directory on the remote file system (local to Virtuoso) where the files to be loaded are located</dd>
+    <dt>Clear target graph before loading</dt>
+    <dd>When checked, executes SPARQL CLEAR GRAPH on the target graph before loading</dd>
+    <dt>Clear load list</dt>
+    <dd>When checked, deletes the db.dba.load_list table in Virtuoso</dd>
+    <dt>User name</dt>
+    <dd>User name to Virtuoso</dd>
+    <dt>Password</dt>
+    <dd>Password to Virtuoso. Note that this is plain text and in no way secured</dd>
+    <dt>Number of loaders to use</dt>
+    <dd>Virtuoso can load multiple files in parallel. This specifies how many and it should correspond to the available number of cores on the server.</dd>
+</dl>
+<!--more-->
+<div class="row" id="characteristics">
+    <h3 class="orange-text center">Characteristics</h3>
+    <div class="col s12 l6">
+        <dl class="flow-text">
+            <dt>ID</dt>
+            <dd>{{ page.short }}</dd>
+            <dt>Type</dt>
+            <dd>{{ page.type }}</dd>
+            <dt>Look in pipeline</dt>
+            <dd><img class="responsive-img" src="../assets/components/{{page.short}}.png" alt="{{page.title}}"></dd>
+        </dl>
+    </div>
+    <div class="col s12 l6">
+        <p class="flow-text">
+        The {{page.title}} component instructs a remote instance of <a href="http://virtuoso.openlinksw.com/">OpenLink Virtuoso</a> to load a file or a directory using the <a href="http://virtuoso.openlinksw.com/dataspace/doc/dav/wiki/Main/VirtBulkRDFLoader">Virtuoso Bulk Loader</a>.
+        It is recommended to use it together with <a href="./l-filestoscp" title="Files to SCP">Files to SCP</a> to load larger RDF files (approx. &gt; 5M triples) to Virtuoso, as the other methods, the <a href="./l-sparqlendpoint" title="SPARQL endpoint">SPARQL endpoint</a> and the <a href="./l-graphstoreprotocol" title="Graph store protocol">Graph store protocol</a>, can cause Virtuoso to become unstable or crash.
+        </p>
+    </div>
+</div>

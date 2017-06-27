@@ -1,0 +1,39 @@
+---
+short: t-packzip
+type: transformer
+color: indigo
+title: Create zip archive
+description: Zips input files into an archive.
+---
+
+<p class="flow-text">
+Transformer, allows the user to zip input RDF files (Files Data Unit) to an output zip archive.
+</p>
+<dl class="flow-text">
+    <dt>Output zip file name</dt>
+    <dd>File name under which the file will be visible in the pipeline, including extension.</dd>
+</dl>
+<!--more-->
+<div class="row" id="characteristics">
+    <h3 class="orange-text center">Characteristics</h3>
+    <div class="col s12 l6">
+        <dl class="flow-text">
+            <dt>ID</dt>
+            <dd>{{ page.short }}</dd>
+            <dt>Type</dt>
+            <dd>{{ page.type }}</dd>
+            <dt>Inputs</dt>
+            <dd>Files</dd>
+            <dt>Outputs</dt>
+            <dd>Files</dd>
+            <dt>Look in pipeline</dt>
+            <dd><img class="responsive-img" src="../assets/components/{{page.short}}.png" alt="{{page.title}}"></dd>
+        </dl>
+    </div>
+    <div class="col s12 l6">
+        <p class="flow-text">
+        The {{page.title}} component packs the input files into a zip file.
+        Typically used before uploading a compressed file using <a href="./l-filestoscp" title="Files to SCP">Files to SCP</a>.
+        </p>
+    </div>
+</div>

@@ -1,0 +1,60 @@
+---
+short: t-exceltocsv
+type: transformer
+color: indigo
+title: Excel to CSV
+description: Transforms Excel files to CSV files.
+---
+
+<p class="flow-text">
+Transformer, allows the user to transform <a href="https://products.office.com/excel" title="Microsoft Excel">Microsoft Excel</a> files to <a href="https://tools.ietf.org/html/rfc4180" title="Comma Separated Values">CSV</a> files.
+</p>
+<dl class="flow-text">
+    <dt>Output file name template</dt>
+    <dd>File name template under which the output CSV file will be visible in the pipeline, including extension. You can use {% raw %}<code>{FILE}</code> and <code>{SHEET}</code>{% endraw %} placeholders to generate multiple CSV files from one input file</dd>
+    <dt>Sheet filter</dt>
+    <dd>Excel sheet name to process. If empty, all sheets are processed</dd>
+    <dt>Row start</dt>
+    <dd>Number of the first row to be transformed</dd>
+    <dt>Row end</dt>
+    <dd>Number of the last row to be transformed</dd>
+    <dt>Column start</dt>
+    <dd>Number of the first column to be transformed</dd>
+    <dt>Column end</dt>
+    <dd>Number of the last column to be transformed</dd>
+    <dt>Virtual columns with header</dt>
+    <dd>Adds <code>sheet_name</code> column header as this is currently the only supported virtual column</dd>
+    <dt>Determine type (date) for numeric cells</dt>
+    <dd>Excel stores dates and integers as double values. When checked, the transformer tries to parse these as dates and integers</dd>
+    <dt>Skip empty rows</dt>
+    <dd>When checked, empty rows are not included in the output CSV. Otherwise, they are full of NULL values</dd>
+    <dt>Add sheet name as column</dt>
+    <dd>When checked, a <code>sheet_name</code> column is added, with source Excel sheet name as a value</dd>
+    <dt>Evaluate formulas</dt>
+    <dd>When checked, formulas in Excel are evaluated</dd>
+</dl>
+<!--more-->
+<div class="row" id="characteristics">
+    <h3 class="orange-text center">Characteristics</h3>
+    <div class="col s12 l6">
+        <dl class="flow-text">
+            <dt>ID</dt>
+            <dd>{{ page.short }}</dd>
+            <dt>Type</dt>
+            <dd>{{ page.type }}</dd>
+            <dt>Inputs</dt>
+            <dd>Files</dd>
+            <dt>Outputs</dt>
+            <dd>Files</dd>
+            <dt>Look in pipeline</dt>
+            <dd><img class="responsive-img" src="../assets/components/{{page.short}}.png" alt="{{page.title}}"></dd>
+        </dl>
+    </div>
+    <div class="col s12 l6">
+        <p class="flow-text">
+        The {{page.title}} component takes the input <a href="https://products.office.com/excel" title="Microsoft Excel">Microsoft Excel</a> files and extracts <a href="https://tools.ietf.org/html/rfc4180" title="Comma Separated Values">CSV</a> files from them.
+        Multiple Excel sheets can be extracted into multiple CSV files.
+        The information of from which sheet a particular CSV file came from can be included in the CSV file itself as an additional column.
+        </p>
+    </div>
+</div>

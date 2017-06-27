@@ -1,0 +1,50 @@
+---
+short: t-valueparser
+type: transformer
+color: indigo
+title: Value parser
+description: Parses literals containing lists and other structured texts.
+---
+
+<p class="flow-text">
+Transformer, allows the user to parse lists and other structured texts from a literal, creating multiple literals.
+</p>
+<dl class="flow-text">
+    <dt>Predicate for input values</dt>
+    <dd>IRI of the predicate linking to the literal to be processed</dd>
+    <dt>Regular expression with groups</dt>
+    <dd><a href="https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html" title="Pattern documentation">Java regular expression</a> with named groups to match the items of the structured input text, e.g. <code>(?&lt;g&gt;[^\[\],]+)</code></dd>
+    <dt>Preserve language tag/datatype</dt>
+    <dd>Sets the language tag or datatype of the input literal on the output literals</dd>
+    <dt>Group name</dt>
+    <dd>Name of the regular expression group to store as a new literal</dd>    
+    <dt>Group predicate</dt>
+    <dd>IRI of the predicate linking to the output literals created from this regular expression group</dd>    
+</dl>
+<!--more-->
+<div class="row" id="characteristics">
+    <h3 class="orange-text center">Characteristics</h3>
+    <div class="col s12 l6">
+        <dl class="flow-text">
+            <dt>ID</dt>
+            <dd>{{ page.short }}</dd>
+            <dt>Type</dt>
+            <dd>{{ page.type }}</dd>
+            <dt>Inputs</dt>
+            <dd>RDF single graph</dd>
+            <dt>Outputs</dt>
+            <dd>RDF single graph</dd>
+            <dt>Look in pipeline</dt>
+            <dd><img class="responsive-img" src="../assets/components/{{page.short}}.png" alt="{{page.title}}"></dd>
+            <dt>Sample pipeline</dt>
+            <dd><a href="../assets/pipelines/{{page.short}}-1.jsonld">available</a></dd>            
+        </dl>
+    </div>
+    <div class="col s12 l6">
+        <p class="flow-text">
+        The {{page.title}} component parses structured text and lists possibly present in literals, creating multiple literals instead.
+        The <a href="https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html" title="Pattern documentation">Java regular expressions</a> are used.
+        You can <a href="http://regexr.com/" title="RegExr">test your regular expressions here</a>.
+        </p>
+    </div>
+</div>

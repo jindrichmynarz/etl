@@ -1,0 +1,402 @@
+---
+layout: default
+title: Documentation
+materialicon: description
+order: 3
+---
+
+<div class="row container">
+  <div class="col s12 l11">
+ 	<div class="row scrollspy" id="overview">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="section " >
+                  <h3 class="header center orange-text">Overview</h3>
+                    <p class="flow-text">
+                        Once you have LinkedPipes ETL <a href="../installation/">installed and running</a>, it is time to explore.
+                        Of course, there is not much to see in an empty instance, but let us go through the basics.
+                        The image below is what we call a Pipeline.
+                        It is a defined data transformation process which consists of interconnected <a href="../components/">components</a>.
+                        You can add a component to a pipeline by clicking in an empty space and selecting the desired component from the list, or by dragging and edge to an empty space.
+                        Each component has a name, green input ports and yellow output ports.
+                        The ports represent Data Units, which can contain either RDF data or regular files, according to their type.
+                        Ports are connected by edges, which indicate the flow of data.
+                        Only ports representing Data Units of the same type can be connected.
+                        In addition, component configuration can be shared among pipelines using <a href="/templates/">component templates</a>.
+                      <img src="../assets/snippets/pipeline.png" alt="ETL Pipeline" class="responsive-img"/>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col s12 m12 l6">
+                <div class="section">
+                  <h4 class="header center orange-text">Pipelines</h4>
+                  <div class="icon-block">
+                    <p class="flow-text">
+                        Pipelines, defined data transformation processes consisting of interconnected <a href="../components/">components</a>, are one of the key concepts in LinkedPipes ETL. 
+                        <img src="../assets/snippets/pipelines.png" alt="Pipelines list" class="responsive-img"/>
+                        So far, you can name them, display them, edit them and run them. 
+                        Once you run a Pipeline, you create its Execution.
+                    </p>
+                  </div>
+                </div>
+            </div>
+            <div class="col s12 m12 l6">
+                <div class="section">
+                  <h4 class="header center orange-text">Executions</h4>
+                  <div class="icon-block">
+                    <p class="flow-text">
+                        An Execution is one run of a Pipeline. 
+                        It can either succeed or fail.
+                        On the Executions page, you can see the currently running executions with their progress as well as finished executions.
+                        <img src="../assets/snippets/executions.png" alt="Executions list" class="responsive-img"/>
+                        You can see the start and end time of an Execution as and the amount of disk space it takes up.
+                        You can free that disk space by using the trash icon.
+                        You can also re-run the execution or edit its Pipeline, which is useful for debugging.
+                        
+                    </p>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+	<div class="row scrollspy" id="workflow">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="section " >
+                  <h3 class="header center orange-text">Pipeline development workflow</h3>
+                  <p class="flow-text">
+                    We have imporved the way a pipeline can be designed, which will save you time and frustration with our component list.
+                </p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <h4 class="center orange-text">Component compatibility</h4>
+            <div class="col s12 m7 l6">
+                <p class="center"><img src="/assets/snippets/dragedge.png" alt="Drag edge" class="responsive-img"/></p>
+            </div>
+            <div class="col s12 m5 l6">
+                <p class="flow-text">
+                    The first component is placed the usual way, just click anywhere on the pipeline and a component list will show up.
+                    From the second component on, it gets interesting.
+                    Place the next component by dragging and edge from an existing one.
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <p class="flow-text">
+                The list of components you see is limited only to those actually compatible with the output of the current component.
+                For <a href="/components/#e-httpget">HTTP Get</a>, you get only those components that can consume files, for components that produce RDF, only those able to consume RDF are offered.
+            </p>
+        </div>
+
+        <div class="row">
+            <h4 class="center orange-text">Component tags</h4>
+            <div class="col s12 m5 l6">
+                <p class="flow-text">
+                    In addition, we tagged the components so that you can find them not only by their name, which sometimes you would have to guess, but also by what they do and by the formats they process.
+                    Let's say you want to unzip a file.
+                    For that, we have the <a href="../components/#t-unpack">Decompress archive</a> component.
+                    However, it may be hard to find under that name.
+                    Now, you can find it by typing <code>zip</code>.
+                </p>
+            </div>
+            <div class="col s12 m7 l6">
+                <p class="center"><img src="/assets/snippets/filter-zip.png" alt="Filter by zip" class="responsive-img"/></p>
+            </div>
+        </div>
+
+        <div class="row">
+            <h4 class="center orange-text">Recommended by your usage</h4>
+            <div class="col s12">
+                <p class="flow-text">
+                    As you create more and more pipelines, you will notice that the ordering of the offered components adjusts to your typical pipeline shape.
+                    This is because we now recommend the components ordered by their probability of appearance, based on the other pipelines in the LP-ETL instance.
+                    For example, when you process lots of tabular data, your typical pipeline will begin with an <a href="/components/#e-httpget">HTTP get</a> followed by the <a href="/components/#t-tabular">Tabular</a> component.
+                    If that is the case, then the Tabular component will be typically listed first, when you drag an edge from the HTTP get component.
+                </p>
+            </div>
+        </div>
+    </div>
+
+	<div class="row scrollspy" id="debug">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="section">
+                  <h3 class="header center orange-text">Debugging support</h3>
+                  <p class="flow-text">
+                    When you execute a pipeline, you can watch it execute in the graphical overview.
+                    When a pipeline fails, you can simply fix what was wrong and resume from the point of failure.
+                    And when you are developing your query and need to rerun it over an over again until it is perfect, you can do that too.
+                </p>
+                </div>
+            </div>
+        </div>	
+
+        <div class="row">
+            <h4 class="center orange-text">Resume failed pipeline execution</h4>
+            <div class="col s12 m6">
+               <p class="center"><img src="/assets/snippets/executions.png" alt="Execution list" class="responsive-img"/></p>
+            </div>
+            <div class="col s12 m6">
+                <p class="flow-text">
+                    When your execution fails, you can see that in the execution list.
+                    When you click on the execution, the graphical execution overview opens, where you can see what went wrong.
+                    By clicking on a data unit (circle on a component) you can browse its contents.
+                    By clicking on a component, you can see details about its execution.
+                    Now you need to switch to edit mode, fix the component that failed and click on &quot;execute&quot; to resume the execution of the pipeline.
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <h4 class="center orange-text">Graphical execution overview</h4>
+            <img src="/assets/snippets/ctia-fail2.png" alt="Pipeline failed in the middle" class="responsive-img"/>
+        </div>
+
+        <div class="row">
+            <h4 class="center orange-text">Component state type</h4>
+            
+            <div id="failed" class="col s12 m6 l3">
+               <div class="card small red white-text text-darken-4 hoverable">
+                <div class="card-image waves-effect waves-block waves-light">
+                  <img class="activator" src="/assets/snippets/failed-component.png" alt="Failed component">
+                </div>
+                <div class="card-content">
+                  <span class="card-title activator">Failed<i class="material-icons right">more_vert</i></span>
+                </div>
+                <div class="card-reveal red">
+                  <span class="card-title">Failed component<i class="material-icons right">close</i></span>
+                  <p>
+                    The component with red border is the failed one.
+                    It needs to be fixed in order for the pipeline to continue.
+                  </p>
+                </div>        
+              </div>	
+          </div>
+
+          <div id="old" class="col s12 m6 l3">
+              <div class="card small teal hoverable white-text text-darken-4">
+                <div class="card-image waves-effect waves-block waves-light">
+                  <img class="activator" src="/assets/snippets/old-component.png" alt="Old component">
+                </div>
+                <div class="card-content">
+                  <span class="card-title activator">Old<i class="material-icons right">more_vert</i></span>
+                </div>
+                <div class="card-reveal teal">
+                  <span class="card-title">Old component<i class="material-icons right">close</i></span>
+                  <p>
+                    Components with teal border have ran in previous executions, not the current one.
+                    These components will not run when the pipeline is resumed.
+                  </p>
+                </div>        
+              </div>	
+          </div>
+
+          <div id="fresh" class="col s12 m6 l3">
+              <div class="card small green white-text text-darken-4 hoverable">
+                <div class="card-image waves-effect waves-block waves-light">
+                  <img class="activator" src="/assets/snippets/fresh-component.png" alt="Fresh component">
+                </div>
+                <div class="card-content">
+                  <span class="card-title activator">Fresh<i class="material-icons right">more_vert</i></span>
+                </div>
+                <div class="card-reveal green">
+                  <span class="card-title">Fresh component<i class="material-icons right">close</i></span>
+                  <p>
+                    Components with green border have ran in the current execution.
+                    These components will not run when the pipeline is resumed.
+                  </p>
+                </div>        
+              </div>	
+          </div>
+          
+          <div id="invalidated" class="col s12 m6 l3">
+              <div class="card small grey white-text text-darken-4 hoverable">
+                <div class="card-image waves-effect waves-block waves-light">
+                  <img class="activator" src="/assets/snippets/invalidated-component.png" alt="Fresh component">
+                </div>
+                <div class="card-content">
+                  <span class="card-title activator"><i class="material-icons right">more_vert</i></span>
+                  <span class="card-title activator">Invalidated</span>
+                </div>
+                <div class="card-reveal grey">
+                  <span class="card-title">Invalidated component<i class="material-icons right">close</i></span>
+                  <p>
+                    Components with grey border are invalidated by a change in the pipeline.
+                    This can be caused by a change in configuration or connection of a component preceding the invalidated component in the execution.
+                    A component can also be invalidated manually by the <i class="material-icons">loop</i> control.
+                    These components will run again when the pipeline is resumed.
+                  </p>
+                </div>        
+              </div>	
+          </div>
+        </div>
+
+        <div class="row">
+            <h4 class="center orange-text">Component debug controls</h4>
+            <div class="col s12 m5">
+               <p class="center"><img src="/assets/snippets/component-controls.png" alt="Component debug controls" class="responsive-img"/></p>
+            </div>
+            <div class="col s12 m7">
+                <p class="flow-text">
+                    When a component is clicked in the pipeline, its controls show up.
+                    The <i class="material-icons">autorenew</i> control invalidates the old and fresh components and all components following it in the execution order.
+                    The <i class="material-icons">keyboard_tab</i> control runs the pipeline up to that component and then stops. 
+                    The <i class="material-icons">power_settings_new</i> control disables the component.
+                    A disabled component behaves as if it is not in the pipeline when a pipeline is executed.
+                    However, it keeps all the configuration and can be enabled again at any time.
+                    This is useful for debugging queries and configurations of a single component.
+                </p>
+            </div>
+        </div>	
+    </div>
+    
+	<div class="row scrollspy" id="detail">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="section">
+                  <h3 class="header center orange-text">Execution detail</h3>
+                    <p class="flow-text">
+                        Once an Execution is finished, you may want to inspect it in more detail.
+                        One way is browsing the intermediary data passed in the pipeline in the graphical overview.
+                        Another way is by clicking on Execution detail in the <i class="material-icons">more_vert</i> menu.
+                        There, you can inspect messages from the execution in the form of a list.
+                    </p>
+                </div>
+            </div>
+        </div>	
+        <div class="row">
+            <div class="col s12 m7">
+                <p class="flow-text">
+                    In the Execution detail view, you can see a list of data units attached to executed components.
+                    The individual data units are named to reflect their expected content.
+                    You can open a data unit and see the files inside via FTP.
+                    Soon, we will add the option to directly query RDF data units using SPARQL.					
+                </p>
+            </div>
+            <div class="col s12 m5">
+               <p class="center"><img src="../assets/snippets/debug.png" alt="Debug view" class="responsive-img"/></p>
+            </div>
+        </div>
+    </div>
+	<div class="row scrollspy" id="sharing">
+        <h3 class="header center orange-text">Sharing options</h3>
+        <div class="row">
+            <div class="col s12">
+                <p class="flow-text">
+                    Pipelines can be shared among colleagues and LP-ETL instances easily.
+                    They can be downloaded from one instance, shared as files on the web and finally imported to another instance either as a whole pipeline or as a pipeline fragment.
+                </p>
+            </div>
+        </div>	
+        <h4 class="header center orange-text">Pipeline download</h4>
+        <div class="row">
+            <div class="col s12 m6">
+                <p class="flow-text">
+                    You can download a pipeline as a JSON-LD file from the pipeline list by clicking on the <i class="material-icons">more_vert</i> menu.
+                    There, you can select either Download or Download wihtout credentials, which removes all potentially sensitive information such as user names, passwords, host names and ports from the downloaded pipeline, so that it can be shared safely.
+                    In addition, you can copy the selected pipeline IRI to the clipboard and send the link to someone who can use it do import the pipeline to his LP-ETL instance without the need to download and upload the pipeline files.
+                </p>
+            </div>
+            <div class="col s12 m6">
+               <p class="center"><img src="../assets/snippets/download1.png" alt="Download pipeline" class="responsive-img"/></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12 m6">
+               <p class="center"><img src="../assets/snippets/download2.png" alt="Download pipeline" class="responsive-img"/></p>
+            </div>
+            <div class="col s12 m6">
+                <p class="flow-text">
+                    The same options for downloading a pipeline are also available from the pipeline editor, again in the <i class="material-icons">more_vert</i> menu.
+                    The pipeline IRI is available in the pipeline detail dialog.
+                </p>
+            </div>
+        </div>
+        <h4 class="header center orange-text">Pipeline import</h4>
+        <div class="row">
+            <div class="col s12 m6">
+                <p class="flow-text">
+                    Once you get a link to a pipeline or the pipeline itself in the form of a JSON-LD file, you can import it in an LP-ETL instance either as a whole new pipeline, or as a pipeline fragment into an existing pipeline.
+                    To import the pipeline as a new pipeline, click on the <i class="material-icons">menu</i> menu and select the <i class="material-icons">file_upload</i> item.
+                </p>
+            </div>
+            <div class="col s12 m6">
+               <p class="center"><img src="../assets/snippets/pipeline-menu.png" alt="Import pipeline menu item" class="responsive-img"/></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12 m6">
+               <p class="center"><img src="../assets/snippets/pipeline-import.png" alt="Import pipeline" class="responsive-img"/></p>
+            </div>
+            <div class="col s12 m6">
+                <p class="flow-text">
+                    In the pipeline import dialog, you can either upload the pipeline in a JSON-LD file, or provide a URL of an existing pipeline, which can be both uploaded somewhere on the web, or it can be the pipeline IRI from another LP-ETL instance.
+                </p>
+            </div>
+        </div>
+        <h4 class="header center orange-text">Pipeline fragments</h4>
+        <div class="row">
+            <div class="col s12 m6">
+                <p class="flow-text">
+                    A more interesting use case for pipeline sharing is to provide a reusable piece of a pipeline to be used in other pipelines.
+                    This is what we call pipeline fragments and you can see them as sample pipelines in documentation of some of our components, such as <a href="/components/t-sparqlconstruct" title="SPARQL construct">SPARQL construct</a>.
+                    In fact, any pipeline can be imported into another existing pipeline as a pipeline fragment.
+                    To import a pipeline fragment, click in the pipeline editor as if adding a new component and select the <i class="material-icons">timeline</i> icon.
+                </p>
+            </div>
+            <div class="col s12 m6">
+               <p class="center"><img src="../assets/snippets/pipeline-fragment-icon.png" alt="Pipeline fragment icon" class="responsive-img"/></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12 m6">
+               <p class="center"><img src="../assets/snippets/pipeline-fragment-import.png" alt="Pipeline fragment icon" class="responsive-img"/></p>
+            </div>
+            <div class="col s12 m6">
+                <p class="flow-text">
+                    In the pipeline fragment import dialog, there are several options of providing the fragment.
+                    The first two are the same as for pipeline import.
+                    You can provide a URL of a pipeline in an LP-ETL instance or on the web, you can upload a pipeline in a JSON-LD file.
+                    In addition, you can import a local pipeline from the local LP-ETL instance as a pipeline fragment into another pipeline.
+                    The list of pipelines in the Local pipeline tab can be filtered by the pipeline name.
+                </p>
+            </div>
+        </div>
+    </div>
+	<div class="row scrollspy" id="personalization">
+        <h3 class="header center orange-text">Personalization</h3>
+        <div class="row">
+            <div class="col s12 m6">
+                <p class="flow-text">
+                    At the moment, we have one option for personalization which can be set in the Personalization page.
+                    You can choose whether you will start at the Pipeline list screen or the Executions list screen when you come to your LP-ETL instance.
+                    This setting is stored as a cookie in your web browser.
+                </p>
+            </div>
+            <div class="col s12 m6">
+               <p class="center"><img src="../assets/snippets/personalization.png" alt="Personalization" class="responsive-img"/></p>
+            </div>
+        </div>
+    </div>
+  </div>
+  <div class="col l1 hide-on-med-and-down">
+    <div class=" toc-wrapper pinned">
+        <ul class="section table-of-contents flow-text">
+            <li><a href="#overview">Overview</a></li>
+            <li><a href="#workflow">Pipeline development workflow</a></li>
+            <li><a href="#debug">Debugging support</a></li>
+            <li><a href="#detail">Execution detail</a></li>
+            <li><a href="#sharing">Sharing options</a></li>
+            <li><a href="#personalization">Personalization</a></li>
+        </ul>
+    </div>
+  </div>
+</div>

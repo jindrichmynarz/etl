@@ -1,0 +1,222 @@
+{
+  "@graph": [
+    {
+      "@graph": [
+        {
+          "@id": "http://demo.etl.linkedpipes.com/resources/pipelines/created-1465541952318",
+          "@type": [
+            "http://linkedpipes.com/ontology/Pipeline"
+          ],
+          "http://www.w3.org/2004/02/skos/core#prefLabel": "XSLT configuration demo"
+        },
+        {
+          "@id": "http://demo.etl.linkedpipes.com/resources/pipelines/created-1465541952318/components/ef51c7bf-58d6-49ca-98ea-1521e98765ce",
+          "@type": [
+            "http://linkedpipes.com/ontology/Component"
+          ],
+          "http://www.w3.org/2004/02/skos/core#prefLabel": "Data 1",
+          "http://linkedpipes.com/ontology/template": {
+            "@id": "http://demo.etl.linkedpipes.com/resources/components/e-textHolder"
+          },
+          "http://linkedpipes.com/ontology/x": 340,
+          "http://linkedpipes.com/ontology/y": 140,
+          "http://linkedpipes.com/ontology/configurationGraph": {
+            "@id": "http://demo.etl.linkedpipes.com/resources/pipelines/created-1465541952318/components/ef51c7bf-58d6-49ca-98ea-1521e98765ce/configuration"
+          }
+        },
+        {
+          "@id": "http://demo.etl.linkedpipes.com/resources/pipelines/created-1465541952318/components/200ba452-f1d8-48ce-8a17-e0b620566a0d",
+          "@type": [
+            "http://linkedpipes.com/ontology/Component"
+          ],
+          "http://www.w3.org/2004/02/skos/core#prefLabel": "Configuration",
+          "http://linkedpipes.com/ontology/template": {
+            "@id": "http://demo.etl.linkedpipes.com/resources/components/e-textHolder"
+          },
+          "http://linkedpipes.com/ontology/x": 340,
+          "http://linkedpipes.com/ontology/y": 280,
+          "http://linkedpipes.com/ontology/configurationGraph": {
+            "@id": "http://demo.etl.linkedpipes.com/resources/pipelines/created-1465541952318/components/200ba452-f1d8-48ce-8a17-e0b620566a0d/configuration"
+          }
+        },
+        {
+          "@id": "http://demo.etl.linkedpipes.com/resources/pipelines/created-1465541952318/components/b7ec9f56-5e38-43de-ab7e-a270b28abc56",
+          "@type": [
+            "http://linkedpipes.com/ontology/Component"
+          ],
+          "http://www.w3.org/2004/02/skos/core#prefLabel": "Data 2",
+          "http://linkedpipes.com/ontology/template": {
+            "@id": "http://demo.etl.linkedpipes.com/resources/components/e-textHolder"
+          },
+          "http://linkedpipes.com/ontology/x": 340,
+          "http://linkedpipes.com/ontology/y": 200,
+          "http://linkedpipes.com/ontology/configurationGraph": {
+            "@id": "http://demo.etl.linkedpipes.com/resources/pipelines/created-1465541952318/components/b7ec9f56-5e38-43de-ab7e-a270b28abc56/configuration"
+          }
+        },
+        {
+          "@id": "http://demo.etl.linkedpipes.com/resources/pipelines/created-1465541952318/components/ec50e092-4ff3-48dc-b25f-77b10ea64df2",
+          "@type": [
+            "http://linkedpipes.com/ontology/Component"
+          ],
+          "http://www.w3.org/2004/02/skos/core#prefLabel": "XSLT transformer",
+          "http://linkedpipes.com/ontology/template": {
+            "@id": "http://demo.etl.linkedpipes.com/resources/components/t-xslt"
+          },
+          "http://linkedpipes.com/ontology/x": 880,
+          "http://linkedpipes.com/ontology/y": 180,
+          "http://linkedpipes.com/ontology/configurationGraph": {
+            "@id": "http://demo.etl.linkedpipes.com/resources/pipelines/created-1465541952318/components/ec50e092-4ff3-48dc-b25f-77b10ea64df2/configuration"
+          }
+        },
+        {
+          "@id": "http://demo.etl.linkedpipes.com/resources/pipelines/created-1465541952318/components/bd68e19c-210a-4431-91d3-6f4ed7143497",
+          "@type": [
+            "http://linkedpipes.com/ontology/Component"
+          ],
+          "http://www.w3.org/2004/02/skos/core#prefLabel": "Files to RDF",
+          "http://linkedpipes.com/ontology/template": {
+            "@id": "http://demo.etl.linkedpipes.com/resources/components/t-filesToRdf"
+          },
+          "http://linkedpipes.com/ontology/x": 520,
+          "http://linkedpipes.com/ontology/y": 280
+        },
+        {
+          "@id": "http://demo.etl.linkedpipes.com/resources/pipelines/created-1465541952318/components/06ad894c-0773-48d5-9d66-cabb12825fb1",
+          "@type": [
+            "http://linkedpipes.com/ontology/Component"
+          ],
+          "http://www.w3.org/2004/02/skos/core#prefLabel": "Graph merger",
+          "http://linkedpipes.com/ontology/template": {
+            "@id": "http://demo.etl.linkedpipes.com/resources/components/t-graphMerger"
+          },
+          "http://linkedpipes.com/ontology/x": 680,
+          "http://linkedpipes.com/ontology/y": 280
+        },
+        {
+          "@id": "http://demo.etl.linkedpipes.com/resources/pipelines/created-1465541952318/connection/8707be59-8c44-4227-bdf4-720b00ca70e2",
+          "@type": [
+            "http://linkedpipes.com/ontology/Connection"
+          ],
+          "http://linkedpipes.com/ontology/sourceComponent": {
+            "@id": "http://demo.etl.linkedpipes.com/resources/pipelines/created-1465541952318/components/ef51c7bf-58d6-49ca-98ea-1521e98765ce"
+          },
+          "http://linkedpipes.com/ontology/sourceBinding": "FilesOutput",
+          "http://linkedpipes.com/ontology/targetComponent": {
+            "@id": "http://demo.etl.linkedpipes.com/resources/pipelines/created-1465541952318/components/ec50e092-4ff3-48dc-b25f-77b10ea64df2"
+          },
+          "http://linkedpipes.com/ontology/targetBinding": "FilesInput"
+        },
+        {
+          "@id": "http://demo.etl.linkedpipes.com/resources/pipelines/created-1465541952318/connection/a6f10f2d-ad16-4718-8379-55d6b095c58f",
+          "@type": [
+            "http://linkedpipes.com/ontology/Connection"
+          ],
+          "http://linkedpipes.com/ontology/sourceComponent": {
+            "@id": "http://demo.etl.linkedpipes.com/resources/pipelines/created-1465541952318/components/b7ec9f56-5e38-43de-ab7e-a270b28abc56"
+          },
+          "http://linkedpipes.com/ontology/sourceBinding": "FilesOutput",
+          "http://linkedpipes.com/ontology/targetComponent": {
+            "@id": "http://demo.etl.linkedpipes.com/resources/pipelines/created-1465541952318/components/ec50e092-4ff3-48dc-b25f-77b10ea64df2"
+          },
+          "http://linkedpipes.com/ontology/targetBinding": "FilesInput"
+        },
+        {
+          "@id": "http://demo.etl.linkedpipes.com/resources/pipelines/created-1465541952318/connection/5afc19cc-0c55-4512-8daa-a860a2fa8546",
+          "@type": [
+            "http://linkedpipes.com/ontology/Connection"
+          ],
+          "http://linkedpipes.com/ontology/sourceComponent": {
+            "@id": "http://demo.etl.linkedpipes.com/resources/pipelines/created-1465541952318/components/200ba452-f1d8-48ce-8a17-e0b620566a0d"
+          },
+          "http://linkedpipes.com/ontology/sourceBinding": "FilesOutput",
+          "http://linkedpipes.com/ontology/targetComponent": {
+            "@id": "http://demo.etl.linkedpipes.com/resources/pipelines/created-1465541952318/components/bd68e19c-210a-4431-91d3-6f4ed7143497"
+          },
+          "http://linkedpipes.com/ontology/targetBinding": "InputFiles"
+        },
+        {
+          "@id": "http://demo.etl.linkedpipes.com/resources/pipelines/created-1465541952318/connection/0d8c2430-82b0-4af2-b3d2-96181bce5fae",
+          "@type": [
+            "http://linkedpipes.com/ontology/Connection"
+          ],
+          "http://linkedpipes.com/ontology/sourceComponent": {
+            "@id": "http://demo.etl.linkedpipes.com/resources/pipelines/created-1465541952318/components/bd68e19c-210a-4431-91d3-6f4ed7143497"
+          },
+          "http://linkedpipes.com/ontology/sourceBinding": "OutputRdf",
+          "http://linkedpipes.com/ontology/targetComponent": {
+            "@id": "http://demo.etl.linkedpipes.com/resources/pipelines/created-1465541952318/components/06ad894c-0773-48d5-9d66-cabb12825fb1"
+          },
+          "http://linkedpipes.com/ontology/targetBinding": "InputRdf"
+        },
+        {
+          "@id": "http://demo.etl.linkedpipes.com/resources/pipelines/created-1465541952318/connection/7d8bf5bf-568c-4f2a-9ca7-3a2dc845f71b",
+          "@type": [
+            "http://linkedpipes.com/ontology/Connection"
+          ],
+          "http://linkedpipes.com/ontology/sourceComponent": {
+            "@id": "http://demo.etl.linkedpipes.com/resources/pipelines/created-1465541952318/components/06ad894c-0773-48d5-9d66-cabb12825fb1"
+          },
+          "http://linkedpipes.com/ontology/sourceBinding": "OutputRdf",
+          "http://linkedpipes.com/ontology/targetComponent": {
+            "@id": "http://demo.etl.linkedpipes.com/resources/pipelines/created-1465541952318/components/ec50e092-4ff3-48dc-b25f-77b10ea64df2"
+          },
+          "http://linkedpipes.com/ontology/targetBinding": "Parameters"
+        }
+      ],
+      "@id": "http://demo.etl.linkedpipes.com/resources/pipelines/created-1465541952318"
+    },
+    {
+      "@graph": [
+        {
+          "@id": "http://localhost/resources/configuration",
+          "@type": [
+            "http://plugins.linkedpipes.com/ontology/e-textHolder#Configuration"
+          ],
+          "http://plugins.linkedpipes.com/ontology/e-textHolder#fileName": "data-1.xml",
+          "http://plugins.linkedpipes.com/ontology/e-textHolder#content": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<coordinates>\n  <position>\n    <x-ref>358082841</x-ref>\n  </position>\n</coordinates>"
+        }
+      ],
+      "@id": "http://demo.etl.linkedpipes.com/resources/pipelines/created-1465541952318/components/ef51c7bf-58d6-49ca-98ea-1521e98765ce/configuration"
+    },
+    {
+      "@graph": [
+        {
+          "@id": "http://localhost/resources/configuration",
+          "@type": [
+            "http://plugins.linkedpipes.com/ontology/e-textHolder#Configuration"
+          ],
+          "http://plugins.linkedpipes.com/ontology/e-textHolder#fileName": "configuration.ttl",
+          "http://plugins.linkedpipes.com/ontology/e-textHolder#content": "@prefix xslt: <http://etl.linkedpipes.com/ontology/components/t-xslt/> .\n@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .\n@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .\n@prefix xml: <http://www.w3.org/XML/1998/namespace> .\n@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .\n\n<http://localhost/resource/configuration> a xslt:Config ;\n    xslt:fileInfo <http://localhost/resource/configuration/fileinfo/1>,\n        <http://localhost/resource/configuration/fileinfo/2> .\n\n<http://localhost/resource/configuration/fileinfo/1> a xslt:FileInfo ;\n    xslt:fileName \"data-1.xml\" ;\n    xslt:parameter <http://localhost/resource/configuration/fileinfo/1/param/1> .\n\n<http://localhost/resource/configuration/fileinfo/1/param/1> a xslt:Parameter ;\n    xslt:parameterName \"recordid\" ;\n    xslt:parameterValue \"365670661\" .\n\n<http://localhost/resource/configuration/fileinfo/2> a xslt:FileInfo ;\n    xslt:fileName \"data-2.xml\" ;\n    xslt:outputName \"data-2-output.ttl\" ;\n    xslt:parameter <http://localhost/resource/configuration/fileinfo/2/param/1> .\n\n<http://localhost/resource/configuration/fileinfo/2/param/1> a xslt:Parameter ;\n    xslt:parameterName \"recordid\" ;\n    xslt:parameterValue \"365670662\" ."
+        }
+      ],
+      "@id": "http://demo.etl.linkedpipes.com/resources/pipelines/created-1465541952318/components/200ba452-f1d8-48ce-8a17-e0b620566a0d/configuration"
+    },
+    {
+      "@graph": [
+        {
+          "@id": "http://localhost/resources/configuration",
+          "@type": [
+            "http://plugins.linkedpipes.com/ontology/e-textHolder#Configuration"
+          ],
+          "http://plugins.linkedpipes.com/ontology/e-textHolder#fileName": "data-2.xml",
+          "http://plugins.linkedpipes.com/ontology/e-textHolder#content": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<coordinates>\n  <position>\n    <x-ref>358082842</x-ref>\n  </position>\n</coordinates>"
+        }
+      ],
+      "@id": "http://demo.etl.linkedpipes.com/resources/pipelines/created-1465541952318/components/b7ec9f56-5e38-43de-ab7e-a270b28abc56/configuration"
+    },
+    {
+      "@graph": [
+        {
+          "@id": "http://localhost/resources/configuration",
+          "@type": [
+            "http://plugins.linkedpipes.com/ontology/t-xslt#Configuration"
+          ],
+          "http://plugins.linkedpipes.com/ontology/t-xslt#template": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<xsl:stylesheet version=\"2.0\" xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\">\n<xsl:output method=\"text\" version=\"1.0\" encoding=\"UTF-8\" indent=\"no\"/>\n<xsl:param name=\"recordid\"/>\n\n<xsl:template match=\"/\">\n  <xsl:apply-templates/>\n</xsl:template>\n\n<xsl:template match=\"position\">\n  <xsl:text>&lt;http://localhost/resource/entity</xsl:text>\n  <xsl:value-of select=\"concat('/', $recordid)\"/>\n  <xsl:text>&gt; &lt;http://localhost/ontology/x-ref&gt; </xsl:text>\n  <xsl:value-of select=\"x-ref\"/> \n  <xsl:text> .\n</xsl:text>\n</xsl:template>\n\n</xsl:stylesheet>",
+          "http://plugins.linkedpipes.com/ontology/t-xslt#extension": "ttl"
+        }
+      ],
+      "@id": "http://demo.etl.linkedpipes.com/resources/pipelines/created-1465541952318/components/ec50e092-4ff3-48dc-b25f-77b10ea64df2/configuration"
+    }
+  ]
+}
